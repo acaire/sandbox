@@ -1,0 +1,11 @@
+groups:
+- name: default
+  rules:
+  - alert: TlsCertificateExpiring
+    annotations:
+      summary: TLS Certificate Expiring within the next 30 days
+    expr: probe_ssl_earliest_cert_expiry{job="blackbox"} - time() < 86400 * 30
+    for: 1h
+    labels:
+      service: infrastructure
+      severity: 5
